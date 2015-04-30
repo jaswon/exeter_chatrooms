@@ -31,9 +31,9 @@
 
     </head>
     <body>
-        <h1><%= room %></h1><button id="logout">Leave Room</button>
+        <h1><%= room %></h1><button class="logout">Leave Room</button>
         <ul id="messages"></ul>
-        <form>
+        <form id="send">
             <input id="m" autocomplete="off" /><button>Send</button>
         </form>
     </body>
@@ -51,7 +51,7 @@
             return false;
         });
 
-        $('#logout').click(function() {
+        $('.logout').click(function() {
             io.emit('logout', {
                 room: "<%= room %>",
                 name: handle,

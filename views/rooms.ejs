@@ -4,9 +4,12 @@
         <link rel="stylesheet" type="text/css" href="/assets/main.css">
     </head>
     <body>
-        <h1>
+        <h1 id="greeting">
             Hello, <%= user %>!
         </h1>
+        <form action="/logout">
+            <input type="submit" class="logout" value="Log out" />
+        </form>
         <div class="form-container">
             <h1>Select A Room To Join</h1>
             <div id="room-container">

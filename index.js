@@ -100,6 +100,11 @@ app.post('/login', passport.authenticate('local',
     }
 ));
 
+app.get('/logout', function(req, res) {
+    req.logout();
+    res.redirect('/login');
+});
+
 app.get('/rooms', isLoggedIn, function(req,res) {
     soap.createClient('https://connect.exeter.edu/student/_vti_bin/UserProfileService.asmx?WSDL',{
         wsdl_headers: {
