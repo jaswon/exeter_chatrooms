@@ -12,7 +12,7 @@ var rStore       = require('connect-redis')(session);
 var passSocket   = require("passport.socketio");
 var redis        = require("redis").createClient(13460 ,'pub-redis-13460.us-east-1-2.2.ec2.garantiadata.com');
 
-redis.auth(ENV['REDIS_PASS'], function() {
+redis.auth(process.env.REDIS_PASS, function() {
     console.log("cool")
 })
 
@@ -24,7 +24,7 @@ app.http().io()
 
 require('./passport')(passport);
 
-app.set('secret',ENV['SESSION_SECRET'])
+app.set('secret',process.env.SESSION_SECRET)
 
 app.use(express.static('public'));
 app.use(bodyParser.urlencoded({extended: true}));
