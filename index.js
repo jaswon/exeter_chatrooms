@@ -145,4 +145,4 @@ app.get('/rooms/:room', isLoggedIn, function(req,res) {
 // START SERVER
 // ------------
 
-app.listen(80)
+app.listen(process.env.PORT || 80)
