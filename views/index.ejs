@@ -1,0 +1,28 @@
+<!doctype html>
+<html>
+    <head>
+        <title>hammer stuff</title>
+        <link rel="stylesheet" href="assets/main.css">
+
+        <script src="/js/socket.io.js"></script>
+        <script>
+            var socket = io();
+        </script>
+        <script src="/js/hammer.js"></script>
+
+        <script src="/js/utils.js"></script>
+        <script src="/js/card.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <div class="buttons">
+                <button name="yes" onclick="swipe(-1)">&#10007;</button>
+                <button name="no" onclick="swipe(1)">&#10003;</button>
+            </div>
+            <ul id="stack">
+            </ul>
+        </div>
+        <a href="/logout">LOGOUT</a>
+    </body>
+    <script src="/js/main.js"></script>
+</html>

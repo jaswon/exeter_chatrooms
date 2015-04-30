@@ -1,0 +1,64 @@
+<html>
+    <head>
+        <title><%= room %></title>
+        <link rel="stylesheet" type="text/css" href="/assets/main.css">
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="/socket.io/socket.io.js"></script>
+        <script>
+            io = io.connect()
+            var handle;
+            do {
+                handle = prompt('Choose an identifier (hovering over this will display your exeter username)')
+                if (!handle) {
+                    window.location = "/rooms/"
+                }
+            } while ("" == handle);
+            // Emit ready event with room name.
+            io.emit('ready', {
+                room: "<%= room %>",
+                name: handle,
+                user: "<%= user %>"
+            })
+            // Listen for the announce event.
+            io.on('announce', function(data) {
+                $('ul').append('<li class="alert"> ' + data.message + '</li>')
+            })
+
+            io.on('message', function(data) {
+                $('ul').append('<li><span title="' + data.user + '">' + data.name + '</span>: ' + data.data + '</li>')
+            })
+        </script>
+
+    </head>
+    <body>
+        <h1><%= room %></h1><button id="logout">Leave Room</button>
+        <ul id="messages"></ul>
+        <form>
+            <input id="m" autocomplete="off" /><button>Send</button>
+        </form>
+    </body>
+    <script charset="utf-8">
+        $('form').submit(function(){
+            if ("" !== $('#m').val().replace(/^\s+|\s+$/g, '')) {
+                io.emit('message', {
+                    room: "<%= room %>",
+                    name: handle,
+                    user: "<%= user %>",
+                    data: $('#m').val().replace(/^\s+|\s+$/g, '')
+                });
+                $('#m').val('');
+            }
+            return false;
+        });
+
+        $('#logout').click(function() {
+            io.emit('logout', {
+                room: "<%= room %>",
+                name: handle,
+                user: "<%= user %>"
+            })
+            window.location = "/rooms/";
+            return true;
+        });
+    </script>
+</html>

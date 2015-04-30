@@ -1,0 +1,33 @@
+<html>
+    <head>
+        <title>Lobby</title>
+        <link rel="stylesheet" type="text/css" href="/assets/main.css">
+    </head>
+    <body>
+        <h1>
+            Hello, <%= user %>!
+        </h1>
+        <div class="form-container">
+            <h1>Select A Room To Join</h1>
+            <div id="room-container">
+                <% if (rooms.length > 0) { %>
+                    <% rooms.forEach(function(room){
+                        room = room.substring(room.indexOf(" ") + 1,room.indexOf('#'))
+                    %>
+                        <label for="<%= room %>">
+                            <input type="radio" value="<%= room %>" name="room" id="<%= room %>" checked=false onclick='window.location = "/rooms/"+encodeURIComponent(this.value)'>
+                            <span><%= room %></span>
+                        </label>
+                    <% }); %>
+                <% } %>
+            </div>
+
+        </div>
+    </body>
+    <script charset="utf-8">
+        var ele = document.getElementsByName("room");
+        for(var i=0;i<ele.length;i++) {
+            ele[i].checked = false;
+        }
+    </script>
+</html>
