@@ -12,7 +12,7 @@ body {
     width: 1px;
 }
 
-[type="radio"] + span {
+[type="radio"] + div {
     user-select: none;
         -webkit-user-select: none; /* Webkit */
         -moz-user-select: none;    /* Firefox */
@@ -21,10 +21,22 @@ body {
     display: inline-block;
     padding: 20px;
     margin: 1px;
-    width: 290px;
+    width: 300px;
     background: #A0CFC0;
     border-radius: 7px;
-    transition: 0.5s ease all;
+}
+
+span.roomdesc {
+    display: inline-block;
+    width: 90%;
+    float: left;
+}
+
+span.online {
+    display: inline-block;
+    width: 10%;
+    float: right;
+    text-align: center;
 }
 
 .form-container {
@@ -38,7 +50,7 @@ body {
     height: 310px;
     margin-top: -185px;
     margin-left: -205px;
-    text-align: center;
+    /*text-align: center;*/
 }
 
 #room-container {

@@ -10,7 +10,7 @@
             do {
                 handle = prompt('Choose an identifier (hovering over this will display your exeter username)')
                 if (!handle) {
-                    window.location = "/rooms/"
+                    window.location = "/lobby/"
                 }
             } while ("" == handle);
             // Emit ready event with room name.
@@ -57,7 +57,7 @@
                 name: handle,
                 user: "<%= user %>"
             })
-            window.location = "/rooms/";
+            window.location = "/lobby/";
             return true;
         });
     </script>

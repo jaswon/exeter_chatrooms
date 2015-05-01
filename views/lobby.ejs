@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <title>Lobby</title>
+        <link rel="stylesheet" type="text/css" href="/assets/main.css">
+    </head>
+    <body>
+        <h1 id="greeting">
+            Hello, <%= user %>!
+        </h1>
+        <form action="/logout">
+            <input type="submit" class="logout" value="Log out" />
+        </form>
+        <div class="form-container">
+            <h1>Select A Room To Join</h1>
+            <div id="room-container">
+                <% if (rooms.length > 0) { %>
+                    <form action="/room" method="POST">
+                        <% rooms.forEach(function(room){ %>
+                            <label for="<%= room.room %>">
+                                <input type="radio" value="<%= room.room %>" name="room" id="<%= room.room %>" onclick='submit()'>
+                                <div><span class="roomdesc"><%= room.room %></span><span class="online"><%= room.online %></span></div>
+                            </label>
+                        <% }); %>
+                    </form>
+                <% } else { %>
+                    <p><br>
+                        Looks like you're not in any classes :/
+                        <br><br>
+                        Check out some courses <a href="http://www.exeter.edu/coursesofinstruction">here</a>
+                    </p>
+                <% } %>
+            </div>
+
+        </div>
+    </body>
+    <script charset="utf-8">
+        var ele = document.getElementsByName("room");
+        for(var i=0;i<ele.length;i++) {
+            ele[i].checked = false;
+        }
+    </script>
+</html>

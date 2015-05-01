@@ -85,7 +85,7 @@ app.io.route('message', function(req) {
 // ---------------
 
 app.get('/', function(req, res) {
-    res.redirect("/rooms")
+    res.redirect("/lobby")
 });
 
 app.get('/login', function(req, res) {
@@ -94,7 +94,7 @@ app.get('/login', function(req, res) {
 
 app.post('/login', passport.authenticate('local',
     {
-        successRedirect: '/rooms',
+        successRedirect: '/lobby',
         failureRedirect: '/login',
         failureFlash : true
     }
@@ -105,7 +105,7 @@ app.get('/logout', function(req, res) {
     res.redirect('/login');
 });
 
-app.get('/rooms', isLoggedIn, function(req,res) {
+app.get('/lobby', isLoggedIn, function(req,res) {
     soap.createClient('https://connect.exeter.edu/student/_vti_bin/UserProfileService.asmx?WSDL',{
         wsdl_headers: {
             Authorization: "Basic " + new Buffer( req.user.user + "@exeter.edu:" + req.user.pass).toString("base64")
@@ -131,8 +131,14 @@ app.get('/rooms', isLoggedIn, function(req,res) {
                                 if (1 == vdata.length) {
                                     vdata = vdata[0];
                                 }
-                                //res.send(vdata);
-                                res.render('rooms.ejs', {rooms: vdata, user: req.user.user})
+                                vdata.forEach(function(room, index) {
+                                    room = room.substring(room.indexOf(" ") + 1,room.indexOf('#'))
+                                    vdata[index] = {
+                                        room: room,
+                                        online: Object.keys(app.io.sockets.manager.rooms["/"+room] || []).length
+                                    }
+                                })
+                                res.render('lobby.ejs', {rooms: vdata, user: req.user.user})
                             }
                         }
                     }
@@ -142,9 +148,10 @@ app.get('/rooms', isLoggedIn, function(req,res) {
     })
 })
 
-app.get('/rooms/:room', isLoggedIn, function(req,res) {
+app.post('/room', isLoggedIn, function(req,res) {
     //res.send(req.params.room);
-    res.render('room.ejs', {room: req.params.room, user: req.user.user})
+    //res.send(req.body.room)
+    res.render('room.ejs', {room: req.body.room, user: req.user.user})
 });
 
 // START SERVER
