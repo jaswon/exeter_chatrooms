@@ -57,6 +57,7 @@ app.io.route('ready', function(req) {
     if (req.handshake.user.user == req.data.user) {
         req.io.join(req.data.room)
         app.io.room(req.data.room).broadcast('announce', {
+            ppllist: app.io.sockets.manager.rooms["/"+req.data.room],
             message: '<span title="' + req.handshake.user.user + '">' + req.data.name + '</span> has joined.'
         })
     }

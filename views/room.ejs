@@ -8,7 +8,7 @@
             io = io.connect()
             var handle;
             do {
-                handle = prompt('Choose an identifier (hovering over this will display your exeter username)')
+                handle = prompt('Choose a display name (hovering over this will display your exeter username)')
                 if (!handle) {
                     window.location = "/lobby/"
                 }
@@ -21,23 +21,30 @@
             })
             // Listen for the announce event.
             io.on('announce', function(data) {
+                console.log(data.ppllist);
                 $('ul').append('<li class="alert"> ' + data.message + '</li>')
+                $('ul').animate({scrollTop: $('ul').get(0).scrollHeight}, 100);
             })
 
             io.on('message', function(data) {
-                $('ul').append('<li><span title="' + data.user + '">' + data.name + '</span>: ' + data.data + '</li>')
+                $('ul').append('<li><span title="' + data.user + '">' + data.name + '</span> (' + new Date().toLocaleTimeString() + ') : ' + data.data + '</li>')
+                $('ul').animate({scrollTop: $('ul').get(0).scrollHeight}, 100);
             })
         </script>
 
     </head>
     <body>
-        <h1><%= room %></h1><button class="logout">Leave Room</button>
+        <div class="header">
+            <h1><%= room %></h1>
+            <button class="logout">Leave Room</button>
+        </div>
         <ul id="messages"></ul>
         <form id="send">
             <input id="m" autocomplete="off" /><button>Send</button>
         </form>
     </body>
     <script charset="utf-8">
+
         $('form').submit(function(){
             if ("" !== $('#m').val().replace(/^\s+|\s+$/g, '')) {
                 io.emit('message', {
@@ -60,5 +67,6 @@
             window.location = "/lobby/";
             return true;
         });
+
     </script>
 </html>
