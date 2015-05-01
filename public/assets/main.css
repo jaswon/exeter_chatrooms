@@ -106,7 +106,7 @@ h1 {
     margin: 5px;
 }
 
-h1#chattitle {
+h1.chattitle {
     padding-left: 10px;
     display: inline-block;
     position: relative;
