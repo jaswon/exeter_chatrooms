@@ -102,7 +102,7 @@ form#send button {
     color: red
 }
 
-h1 {
+h1#chattitle {
     padding-left: 10px;
     display: inline-block;
     position: relative;
