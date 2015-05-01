@@ -3,6 +3,7 @@
         <title><%= room %></title>
         <link rel="stylesheet" type="text/css" href="/assets/main.css">
         <script src="//ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+        <script src="/js/bigSlide.min.js"></script>
         <script src="/socket.io/socket.io.js"></script>
         <script>
             io = io.connect()
@@ -22,28 +23,40 @@
             // Listen for the announce event.
             io.on('announce', function(data) {
                 console.log(data.ppllist);
-                $('ul').append('<li class="alert"> ' + data.message + '</li>')
-                $('ul').animate({scrollTop: $('ul').get(0).scrollHeight}, 100);
+                $('#messages').append('<li class="alert"> ' + data.message + '</li>')
+                $('#messages').animate({scrollTop: $('#messages').get(0).scrollHeight}, 100);
             })
 
             io.on('message', function(data) {
-                $('ul').append('<li><span title="' + data.user + '">' + data.name + '</span> (' + new Date().toLocaleTimeString() + ') : ' + data.data + '</li>')
-                $('ul').animate({scrollTop: $('ul').get(0).scrollHeight}, 100);
+                $('#messages').append('<li><span title="' + data.user + '">' + data.name + '</span> (' + new Date().toLocaleTimeString() + ') : ' + data.data + '</li>')
+                $('#messages').animate({scrollTop: $('ul').get(0).scrollHeight}, 100);
             })
         </script>
 
     </head>
     <body>
-        <div class="header">
-            <h1 class="chattitle"><%= room %></h1>
-            <button class="logout">Leave Room</button>
+        <div class="wrap push">
+            <div class="header">
+                <h1 class="chattitle"><%= room %></h1>
+                <a href="#menu" class="menu-link">&#9776;</a>
+            </div>
+            <ul id="messages"></ul>
+            <form id="send">
+                <input id="m" autocomplete="off" /><button>Send</button>
+            </form>
         </div>
-        <ul id="messages"></ul>
-        <form id="send">
-            <input id="m" autocomplete="off" /><button>Send</button>
-        </form>
+            <nav id="menu" class="panel" role="navigation">
+                <ul>
+                    <li><a id="logout" href="#">Leave Room</a></li>
+                </ul>
+            </nav>
     </body>
     <script charset="utf-8">
+
+        $('.menu-link').bigSlide({
+            'side': 'right',
+            'easyClose': true
+        });
 
         $('form').submit(function(){
             if ("" !== $('#m').val().replace(/^\s+|\s+$/g, '')) {
@@ -58,7 +71,7 @@
             return false;
         });
 
-        $('.logout').click(function() {
+        $('#logout').click(function() {
             io.emit('logout', {
                 room: "<%= room %>",
                 name: handle,

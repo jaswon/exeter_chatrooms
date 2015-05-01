@@ -1,6 +1,40 @@
-body {
-    font-family: "Trebuchet MS", Helvetica, sans-serif
+:root {
+  --bg-color: #990000;
 }
+
+body {
+    font-family: "Trebuchet MS", Helvetica, sans-serif;
+    overflow-x: hidden;
+}
+
+.wrap {
+    position: relative;
+    height: 100%;
+}
+
+#menu {
+    background: var(--bg-color);
+
+}
+
+.menu-link {
+    float: right;
+    box-sizing: border-box;
+    margin: 5px;
+    display: inline-block;
+    padding: 10px 15px;
+    font-weight: 900;
+    text-align: center;
+    vertical-align: middle;
+    color: #000;
+    background-color: white;
+    border-color: #000;
+    /*border: 2px solid;*/
+    border-radius: 4px;
+    text-decoration: none;
+    outline: 0;
+}
+
 
 [type="radio"] {
     border: 0;
@@ -22,8 +56,9 @@ body {
     padding: 20px;
     margin: 1px;
     width: 300px;
-    background: #A0CFC0;
+    background: var(--bg-color);
     border-radius: 7px;
+    color: white;
 }
 
 span.roomdesc {
@@ -61,21 +96,22 @@ span.online {
 
 form#send {
     background: #000;
-    position: fixed;
-    bottom: 0;
-    width: calc(100% - 20px);
+    float: left;
+    margin: 0;
+    width: 100%;
 }
 
 form#send input {
     border: 0;
     margin: 3px;
     padding: 10px;
-    width: calc(100% - 39px);
+    width: calc(100% - 49px);
 }
 
 form#send button {
-    width: 30px;
-    background: rgb(130, 224, 255);
+    width: 40px;
+    color: white;
+    background: var(--bg-color);
     border: none;
     height: 34px;
     margin-right: 3px;
@@ -83,13 +119,11 @@ form#send button {
 
 #messages {
     list-style-type: none;
-    position: absolute;
-    top: 50px;
     float: left;
     margin: 0;
     padding: 0;
-    height: calc(100% - 110px);
-    width: calc(100% - 20px);
+    height: calc(100% - 90px);
+    width: 100%;
     overflow-y: scroll;
 }
 
@@ -108,10 +142,11 @@ h1 {
 
 h1.chattitle {
     padding-left: 10px;
+    color: white;
     display: inline-block;
     position: relative;
     margin: 5px;
-    width: calc(100% - 160px);
+    width: calc(100% - 75px);
     white-space: nowrap;
     overflow-x: hidden;
     text-overflow: ellipsis;
@@ -122,8 +157,9 @@ h1.chattitle {
 }
 
 .header {
-    background: #A0CFC0;
-    position: absolute;
+    background: var(--bg-color);
+    float: left;
+    /*position: absolute;*/
     left: 0;
     top: 0;
     height: 50px;
@@ -138,4 +174,14 @@ h1.chattitle {
     padding: 10px 20px 10px 20px;
     margin: 5px;
     border-radius: 13px;
+}
+
+ul {
+    list-style-type: none;
+}
+
+li a {
+    text-decoration: none;
+    outline: 0;
+    color: white;
 }
