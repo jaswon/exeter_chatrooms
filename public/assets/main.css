@@ -54,7 +54,7 @@ span.online {
 }
 
 #room-container {
-    height: 270px;
+    height: 260px;
     overflow-y: scroll;
     overflow-x: hidden;
 }
@@ -100,6 +100,10 @@ form#send button {
 
 #messages li.alert {
     color: red
+}
+
+h1 {
+    margin: 5px;
 }
 
 h1#chattitle {
