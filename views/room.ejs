@@ -22,34 +22,41 @@
             })
             // Listen for the announce event.
             io.on('announce', function(data) {
-                console.log(data.ppllist);
                 $('#messages').append('<li class="alert"> ' + data.message + '</li>')
                 $('#messages').animate({scrollTop: $('#messages').get(0).scrollHeight}, 100);
             })
 
             io.on('message', function(data) {
                 $('#messages').append('<li><span title="' + data.user + '">' + data.name + '</span> (' + new Date().toLocaleTimeString() + ') : ' + data.data + '</li>')
-                $('#messages').animate({scrollTop: $('ul').get(0).scrollHeight}, 100);
+                $('#messages').animate({scrollTop: $('#messages').get(0).scrollHeight}, 100);
+            })
+
+            io.on('getonline', function(data) {
+                $(".onlinelist").empty();
+                data.forEach(function(person) {
+                    $('.onlinelist').append('<li><span title="' + person.user + '">' + person.name + '</span></li>');
+                })
             })
         </script>
 
     </head>
     <body>
+        <nav id="menu" class="panel" role="navigation">
+            <ul>
+                <li><a id="logout" href="#">Leave Room</a></li>
+            </ul>
+            <ul class="onlinelist"></ul>
+        </nav>
         <div class="wrap push">
             <div class="header">
                 <h1 class="chattitle"><%= room %></h1>
-                <a href="#menu" class="menu-link">&#9776;</a>
+                <a href="#menu" class="menu-link"><span>&#9776;</span></a>
             </div>
             <ul id="messages"></ul>
             <form id="send">
                 <input id="m" autocomplete="off" /><button>Send</button>
             </form>
         </div>
-            <nav id="menu" class="panel" role="navigation">
-                <ul>
-                    <li><a id="logout" href="#">Leave Room</a></li>
-                </ul>
-            </nav>
     </body>
     <script charset="utf-8">
 
@@ -57,6 +64,12 @@
             'side': 'right',
             'easyClose': true
         });
+
+        $('.menu-link').click(function() {
+            io.emit('getonline', {
+                user: "<%= user %>"
+            })
+        })
 
         $('form').submit(function(){
             if ("" !== $('#m').val().replace(/^\s+|\s+$/g, '')) {

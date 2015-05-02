@@ -1,20 +1,19 @@
-:root {
-  --bg-color: #990000;
-}
-
 body {
     font-family: "Trebuchet MS", Helvetica, sans-serif;
-    overflow-x: hidden;
+    overflow: hidden;
 }
 
 .wrap {
     position: relative;
     height: 100%;
+    background-color: white;
+    margin:-10px;
+    padding: 10px;
 }
 
-#menu {
-    background: var(--bg-color);
 
+#menu {
+    background: #990000;
 }
 
 .menu-link {
@@ -56,7 +55,7 @@ body {
     padding: 20px;
     margin: 1px;
     width: 300px;
-    background: var(--bg-color);
+    background: #990000;
     border-radius: 7px;
     color: white;
 }
@@ -111,7 +110,7 @@ form#send input {
 form#send button {
     width: 40px;
     color: white;
-    background: var(--bg-color);
+    background: #990000;
     border: none;
     height: 34px;
     margin-right: 3px;
@@ -157,7 +156,7 @@ h1.chattitle {
 }
 
 .header {
-    background: var(--bg-color);
+    background: #990000;
     float: left;
     /*position: absolute;*/
     left: 0;
@@ -184,4 +183,14 @@ li a {
     text-decoration: none;
     outline: 0;
     color: white;
+}
+
+.onlinelist {
+    position: absolute;
+    bottom: 0px;
+    height: 40%;
+    width: 100%;
+    margin-bottom: -16px;
+    overflow-y: scroll;
+    overflow-x: hidden;
 }

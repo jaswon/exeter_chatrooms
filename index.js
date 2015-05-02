@@ -56,16 +56,33 @@ function isLoggedIn(req, res, next) {
 app.io.route('ready', function(req) {
     if (req.handshake.user.user == req.data.user) {
         req.io.join(req.data.room)
+        req.io.socket.set('name',{
+            name: req.data.name,
+            user: req.data.user
+        });
+        //console.log(app.io.room(req.data.room).socket.sockets);
         app.io.room(req.data.room).broadcast('announce', {
-            ppllist: app.io.sockets.manager.rooms["/"+req.data.room],
+            //ppllist: app.io.sockets.manager.rooms["/"+req.data.room],
             message: '<span title="' + req.handshake.user.user + '">' + req.data.name + '</span> has joined.'
         })
     }
 })
 
+app.io.route('getonline', function(req) {
+    if (req.handshake.user.user == req.data.user) {
+        var list = [];
+        for (var socketId in app.io.room(req.data.room).socket.sockets) {
+            app.io.room(req.data.room).socket.sockets[socketId].get('name', function(err, name) {
+                list.push(name);
+            });
+        }
+        req.io.emit('getonline',list);
+    }
+})
+
 app.io.route('logout', function(req) {
     if (req.handshake.user.user == req.data.user) {
-        req.io.leave(req.data.room)
+        req.socket.leave(req.data.room);
         app.io.room(req.data.room).broadcast('announce', {
             message: '<span title="' + req.handshake.user.user + '">' + req.data.name + '</span> has left.'
         })
